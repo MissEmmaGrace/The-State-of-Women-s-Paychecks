@@ -1,0 +1,492 @@
+---
+title: "The State of Women’s Paychecks:"
+subtitle: "How women’s salaries have compared to men’s across all fifty U.S. states"
+author: "Emma Oliver"
+format: html
+editor: visual
+---
+
+```{r Loading packages and wrangling data}
+#| include: false
+
+# Loading Packages
+library(ggplot2)
+library(ggridges)
+library(tidyverse)
+library(rnaturalearth)
+library(sf)
+library(leaflet)
+library(gganimate)
+library(gifski)
+library(png)
+library(rsconnect)
+
+#Loading State Data
+
+Iowa <- read_csv("file (3).csv")
+Iowa <- Iowa |>
+  select(Year, Value)
+
+Kansas <- read_csv("file (4).csv")
+Kansas <- Kansas |>
+  select(Year, Value)
+
+Kentucky <- read_csv("file (1).csv")
+Kentucky <- Kentucky |>
+  select(Year, Value)
+
+Louisiana <- read_csv("file (2).csv")
+Louisiana <- Louisiana |>
+  select(Year, Value)
+
+Indiana <- read_csv("file (5).csv")
+Indiana <- Indiana |>
+  select(Year, Value)
+
+Wyoming <- read_csv("file (6).csv")
+Wyoming <- Wyoming |>
+  select(Year, Value)
+
+Maryland <- read_csv("file (7).csv")
+Maryland <- Maryland |>
+  select(Year, Value)
+
+Massachusetts <- read_csv("file (8).csv")
+Massachusetts <- Massachusetts |>
+  select(Year, Value)
+
+Mississippi <- read_csv("file (9).csv")
+Mississippi <- Mississippi |>
+  select(Year, Value)
+
+Missouri <- read_csv("file (10).csv")
+Missouri <- Missouri |>
+  select(Year, Value)
+
+Montana <- read_csv("file (11).csv")
+Montana <- Montana |>
+  select(Year, Value)
+
+Utah <- read_csv("file (12).csv")
+Utah <- Utah |>
+  select(Year, Value)
+
+Vermont <- read_csv("file (13).csv")
+Vermont <- Vermont |>
+  select(Year, Value)
+
+Virginia <- read_csv("file (14).csv")
+Virginia <- Virginia |>
+  select(Year, Value)
+
+Washington <- read_csv("file (15).csv")
+Washington <- Washington |>
+  select(Year, Value)
+
+WestVirginia <- read_csv("file (16).csv")
+WestVirginia <- WestVirginia |>
+  select(Year, Value)
+
+Michigan <- read_csv("file (17).csv")
+Michigan <- Michigan |>
+  select(Year, Value)
+
+Minnesota <- read_csv("file (18).csv")
+Minnesota <- Minnesota |>
+  select(Year, Value)
+
+Maine <- read_csv("file (19).csv")
+Maine <- Maine |>
+  select(Year, Value)
+
+Wisconsin <- read_csv("file (20).csv")
+Wisconsin <- Wisconsin |>
+  select(Year, Value)
+
+NewHampshire <- read_csv("file (21).csv")
+NewHampshire <- NewHampshire |>
+  select(Year, Value)
+
+NewJersey <- read_csv("file (22).csv")
+NewJersey <- NewJersey |>
+  select(Year, Value)
+
+NewMexico <- read_csv("file (23).csv")
+NewMexico <- NewMexico |>
+  select(Year, Value)
+
+NorthDakota <- read_csv("file (24).csv")
+NorthDakota <- NorthDakota |>
+  select(Year, Value)
+
+Ohio <- read_csv("file (25).csv")
+Ohio <- Ohio |>
+  select(Year, Value)
+
+Oklahoma <- read_csv("file (26).csv")
+Oklahoma <- Oklahoma |>
+  select(Year, Value)
+
+RhodeIsland <- read_csv("file (27).csv")
+RhodeIsland <- RhodeIsland |>
+  select(Year, Value)
+
+SouthCarolina <- read_csv("file (28).csv")
+SouthCarolina <- SouthCarolina |>
+  select(Year, Value)
+
+SouthDakota <- read_csv("file (29).csv")
+SouthDakota <- SouthDakota |>
+  select(Year, Value)
+
+Alabama <- read_csv("file (30).csv")
+Alabama <- Alabama |>
+  select(Year, Value)
+
+Alaska <- read_csv("file (31).csv")
+Alaska <- Alaska |>
+  select(Year, Value)
+
+Arizona <- read_csv("file (32).csv")
+Arizona <- Arizona |>
+  select(Year, Value)
+
+Arkansas <- read_csv("file (33).csv")
+Arkansas <- Arkansas |>
+  select(Year, Value)
+
+NewYork <- read_csv("file (34).csv")
+NewYork <- NewYork |>
+  select(Year, Value)
+
+NorthCarolina <- read_csv("file (35).csv")
+NorthCarolina <- NorthCarolina |>
+  select(Year, Value)
+
+Oregon <- read_csv("file (36).csv")
+Oregon <- Oregon |>
+  select(Year, Value)
+
+Pennsylvania <- read_csv("file (37).csv") 
+Pennsylvania <- Pennsylvania |>
+  select(Year, Value)
+
+California <- read_csv("file (38).csv")
+California <- California |>
+  select(Year, Value)
+
+Colorado <- read_csv("file (39).csv")
+Colorado <- Colorado |>
+  select(Year, Value)
+
+Tennessee <- read_csv("file (40).csv") 
+Tennessee <- Tennessee |>
+  select(Year, Value)
+
+Texas <- read_csv("file (41).csv")
+Texas <- Texas |>
+  select(Year, Value)
+
+Connecticut <- read_csv("file (42).csv")
+Connecticut <- Connecticut |>
+  select(Year, Value)
+
+Delaware <- read_csv("file (43).csv")
+Delaware <- Delaware |>
+  select(Year, Value)
+
+Florida <- read_csv("file (44).csv")
+Florida <- Florida |>
+  select(Year, Value)
+
+Georgia <- read_csv("file (45).csv")
+Georgia <- Georgia |>
+  select(Year, Value)
+
+Hawaii <- read_csv("file (46).csv")
+Hawaii <- Hawaii |>
+  select(Year, Value)
+
+Idaho <- read_csv("file (47).csv")
+Idaho <- Idaho |>
+  select(Year, Value)
+
+Illinois <- read_csv("file (48).csv")
+Illinois <- Illinois |>
+  select(Year, Value)
+
+Nebraska <- read_csv("file (49).csv")
+Nebraska <- Nebraska |>
+  select(Year, Value)
+
+Nevada <- read_csv("file (50).csv")
+Nevada <- Nevada |>
+  select(Year, Value)
+
+# Combining all 50 states' data
+
+us_data <- bind_rows(list(Alabama = Alabama, Alaska = Alaska, Arizona = Arizona, 
+                          Arkansas = Arkansas, California = California, 
+                          Colorado = Colorado, Connecticut = Connecticut, 
+                          Delaware = Delaware, Florida = Florida, 
+                          Georgia = Georgia, Hawaii = Hawaii, Idaho = Idaho, 
+                          Illinois = Illinois, Indiana = Indiana, Iowa = Iowa, 
+                          Kansas = Kansas, Kentucky = Kentucky, Louisiana = Louisiana, 
+                          Maine = Maine, Maryland = Maryland, Massachusetts = Massachusetts, 
+                          Michigan = Michigan, Minnesota = Minnesota, Mississippi = Mississippi, 
+                          Missouri = Missouri, Montana = Montana, Nebraska = Nebraska, Nevada = Nevada, 
+                          "New Hampshire" = NewHampshire, "New Jersey" = NewJersey, "New Mexico" = NewMexico, 
+                          "New York" = NewYork, "North Carolina" = NorthCarolina, "North Dakota" = NorthDakota, 
+                          Ohio = Ohio, Oklahoma = Oklahoma, Oregon = Oregon, Pennsylvania = Pennsylvania, 
+                          "Rhode Island" = RhodeIsland, "South Carolina" = SouthCarolina, "South Dakota" = SouthDakota, 
+                          Tennessee = Tennessee, Texas = Texas, Utah = Utah, Vermont = Vermont, 
+                          Virginia = Virginia, Washington = Washington, "West Virginia" = WestVirginia, Wisconsin = Wisconsin, 
+                          Wyoming = Wyoming), 
+                     .id = "name")
+
+
+
+
+# Adding U.S. geographical information
+
+state_polygons <- ne_download(type = "states") |>
+  filter(admin == "United States of America")
+
+## With Washington DC
+
+joined_states <- left_join(state_polygons, us_data, by = "name") |>
+  mutate(Value = 100-Value) |>
+  select(name, 
+         year = Year, 
+         value = Value, 
+         geometry)
+
+
+## Without Washington DC
+
+joined_states_50 <- left_join(state_polygons, us_data, by = "name") |>
+  filter(name != "District of Columbia") |>
+  mutate(Value = 100-Value) |>
+  select(name, 
+         year = Year, 
+         value = Value, 
+         geometry)
+
+# 2012 and 2025 Data Wrangling
+
+## Filtering Data for year
+joined_states_2012 <- joined_states |>
+  filter(year == 2012)
+
+joined_states_2025 <- joined_states |>
+  filter(year == 2025)
+
+## Bin categories 
+categories <- c(0, 10, 20, 30, 40, 100)
+
+## Category colors
+colors_2012 <- colorBin("GnBu", 
+                        domain = joined_states_2012$value, 
+                        bins = categories, 
+                        reverse = TRUE)
+
+colors_2025 <- colorBin("GnBu", 
+                        domain = joined_states_2025$value, 
+                        bins = categories, 
+                        reverse = TRUE)
+
+## HTML labels for U.S. map
+
+info_2012 <- sprintf(
+  "<strong>%s</strong><br/><strong>Pay gap: </strong>%g",
+  joined_states_2012$name, joined_states_2012$value) |> 
+  lapply(htmltools::HTML)
+
+
+info_2025 <- sprintf(
+  "<strong>%s</strong><br/><strong>Pay gap: </strong>%g",
+  joined_states_2025$name, joined_states_2025$value) |> 
+  lapply(htmltools::HTML)
+
+# Reading and wrangling national data
+
+entire_US <- read.csv("entire_us_data.csv") |>
+  filter(Value != "-") |>
+  drop_na() |>
+  group_by(Year) |>
+  summarize(
+    value = mean(as.numeric(Value))) |>
+  mutate(value = 100 - value)
+
+
+```
+
+
+This article visualizes the gender pay gap in the United States using data from the U.S. Bureau of Labor Statistics' [Current Population Survey](https://www.bls.gov/cps/). Fifty-one data sets entitled "Women's earnings as percent of men's, Median weekly earnings of full-time and salary workers" were used.^[All data sets were downloaded from the U.S. Bureau of Labor Statistics' Data Finder. As of May 27, 2026, all fifty-one data sets (one per U.S. state and one of the entire country) were available on their [website](https://data.bls.gov/dataQuery/search).] These publicly available data sets contain the median earnings of full-time, non-self-employed U.S. workers' weekly earnings divided between men and women. The pay gap was calculated by subtracting 1 from women's earnings as a percent of men's. For example, if women's earnings as a percent of men's were 80% for a certain area, the pay gap would be 20% respectively.
+
+
+## Overall U.S. Trends
+
+The first question of interest is: ***how has the U.S. gender pay gap evolved over the past few decades?*** The graph below displays the U.S. pay gap from 1979 to 2026.^[Since the Current Population Survey divides each year into four quarters, the data for each year on the graph is the mean value across all four quarters of that year.] Unfortunately, the data is not available before 1979.
+   
+
+```{r}
+#| label: U.S. Data Linegraph
+#| echo: false
+#| warning: false
+#| fig-height: 5
+#| fig-width: 9
+
+# Line plot of US Data from 1979-2026
+
+ggplot(data = entire_US, 
+       mapping = aes(
+         x = Year, 
+         y = value)) +
+  geom_line(
+    color = "lightblue3", 
+    linewidth = 1) +
+  labs(
+    y = " Gender Pay Gap",
+    x = "Year",
+    title = "U.S. gender pay gap has stabilized over 1979-2026") +
+  theme_minimal() +
+  theme(
+    axis.title.y = element_text(size = 14),
+    axis.title.x = element_text(size = 14),
+    plot.title = element_text(size = 20)) +
+  coord_cartesian(ylim = c(0,50)) +
+  scale_y_continuous(
+    breaks = c(0, 10, 20, 30, 40, 50),
+    label =  c("0%", "10%", "20%", "30%", "40%", "50%")) +
+  transition_reveal(
+    Year, 
+    range = NULL, 
+    keep_last = TRUE)
+```
+
+There appears to be an overall decreasing trend in the U.S. pay gap over the past few decadews. Ignoring some small natural variation and noise in the data, the pay gap decreased fairly rapidly from approximately 1980 to 2010, stabilizing over 2010 to 2026 at somewhere near 15%. From this visualization, it appears that the pay gap has mostly plateaued in recent years. 
+
+
+## Zooming into the States
+
+However, the graph above doesn't tell us much about what the data looks like at a state level. For example, ***what is the range of percentages across the country? Do they differ geographically by state or region? Or, are all regions/states of the country basically the same?***
+
+Digging deeper into this observation, the data was broken down into states for both 2012 and 2025 (the earliest and latest the data is available).
+
+### 2012 Data (left) vs 2025 Data (right)
+##### *(Hover over each state to see details)*
+
+```{r}
+#| label: map-graphs
+#| echo: false
+#| layout-ncol: 2
+#| column: screen-inset-shaded
+
+# 2012 Map 
+
+leaflet(joined_states_2012) |>
+  addTiles("MapBox") |>
+  addPolygons(
+    fillColor = ~colors_2012(value),
+    weight = 1, 
+    opacity = 1,
+    color = "white",
+    dashArray = "4",
+    fillOpacity = 0.8,
+    highlightOption = highlightOptions(
+      weight = 2, 
+      color = "darkgrey",
+      dashArray = "4", 
+      fillOpacity = 1, 
+      bringToFront = TRUE),
+    label = info_2012,
+    labelOptions = labelOptions(
+      style = list("font-weight" = "normal", 
+                   padding = "3px 5px"),
+      textsize = "14px",
+      direction = "auto")) |>
+  addLegend(
+    pal = colors_2012, 
+    values = ~value, 
+    labFormat = labelFormat(
+      suffix = "%"),
+    opacity = 0.8, 
+    title = "Pay gap", 
+    position = "bottomright") |>
+  setView(-100, 37, zoom = 3.3)
+
+# 2025 Map 
+
+leaflet(joined_states_2025) |>
+  addTiles("MapBox") |>
+  addPolygons(
+    fillColor = ~colors_2025(value),
+    weight = 1, 
+    opacity = 1,
+    color = "white",
+    dashArray = "4",
+    fillOpacity = 0.8,
+    highlightOption = highlightOptions(
+      weight = 2, 
+      color = "darkgrey",
+      dashArray = "4", 
+      fillOpacity = 1, 
+      bringToFront = TRUE),
+    label = info_2025,
+    labelOptions = labelOptions(
+      style = list("font-weight" = "normal", 
+                   padding = "3px 5px"),
+      textsize = "14px",
+      direction = "auto")) |>
+  addLegend(
+    pal = colors_2025, 
+    values = ~value, 
+    labFormat = labelFormat(
+      suffix = "%"), 
+    opacity = 0.8, 
+    title = "Pay gap", 
+    position = "bottomright") |>
+  setView(-100, 37, zoom = 3.3)
+
+```
+
+Overall, most state's are fairly similar to each other,  hovering somewhere within the 15% to 25% range. Even though it is hard to tell, the maps above might indicate a slight geographical trend as well. 
+
+However, the maps above still don't tell the full story between 2012 and 2025. Since the 2025 map has seemingly more darker blue states, it seems to indicate that more states have a lower pay gap in 2025 than in 2012, but it's hard to tell. As a result, the visualization below explores how the pay gap has evolved across all fifty states per year.   
+
+
+```{r}
+#| label: ridge plot
+#| echo: false
+#| fig-height: 8
+#| fig-width: 5
+#| fig-align: center
+
+ggplot(data = joined_states_50,
+            mapping = aes(x = value, y = as.factor(year))) +
+  ggdist::stat_halfeye(
+    fill = "lightblue3", 
+    point_color = NA, 
+    .width = 0, 
+    adjust = 0.5, 
+    width = 0.75, 
+    alpha = 0.7) +
+  theme_minimal() +
+  labs(
+    x = "Gender pay gap",
+    y = "",
+    title = "U.S. pay gap has slightly decreased \non a state level over 2012-2025",
+    subtitle = "Data collected from all 50 U.S. states") +
+  theme(
+    panel.grid.major.y = element_blank(),
+    axis.title.x = element_text(size = 12),
+    plot.title = element_text(size = 16),
+    plot.subtitle = element_text(size = 12)) +
+  scale_x_continuous(
+    breaks = c(0, 10, 20, 30),
+    label =  c("0%", "10%", "20%", "30%"))
+```
+
+In general, there is a very slight decreasing trend in the pay gap between 2012 to 2025. An interesting observation is the tails and outliers for each of the years. In general, earlier years have tails on the higher pay gap side, whereas later years have tails on the lower pay gap side. 
+
