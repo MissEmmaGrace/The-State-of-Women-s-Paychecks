@@ -1,0 +1,452 @@
+---
+title: "The State of Women’s Paychecks:"
+subtitle: "How women’s salaries have compared to men’s across all fifty U.S. states over the past decade"
+author: "Emma Oliver"
+format: html
+editor: visual
+---
+
+```{r Load packages and data}
+#| include: false
+#| 
+# Loading Packages
+library(ggplot2)
+library(rsconnect)
+library(ggridges)
+library(tidyverse)
+library(rnaturalearth)
+library(sf)
+library(leaflet)
+library(dplyr)
+library(readr)
+library(lubridate)
+library(gganimate)
+library(gifski)
+library(png)
+
+#Loading Data
+Iowa <- read_csv("file (3).csv")
+
+Iowa <- Iowa |>
+  select(Year, Value)
+
+Kansas <- read_csv("file (4).csv")
+
+Kansas <- Kansas |>
+  select(Year, Value)
+
+Kentucky <- read_csv("file (1).csv")
+
+Kentucky <- Kentucky |>
+  select(Year, Value)
+
+Louisiana <- read_csv("file (2).csv")
+
+Louisiana <- Louisiana |>
+  select(Year, Value)
+
+Indiana <- read_csv("file (5).csv")
+
+Indiana <- Indiana |>
+  select(Year, Value)
+
+Wyoming <- read_csv("file (6).csv")
+
+Wyoming <- Wyoming |>
+  select(Year, Value)
+
+Maryland <- read_csv("file (7).csv")
+
+Maryland <- Maryland |>
+  select(Year, Value)
+
+Massachusetts <- read_csv("file (8).csv")
+
+Massachusetts <- Massachusetts |>
+  select(Year, Value)
+
+Mississippi <- read_csv("file (9).csv")
+
+Mississippi <- Mississippi |>
+  select(Year, Value)
+
+Missouri <- read_csv("file (10).csv")
+
+Missouri <- Missouri |>
+  select(Year, Value)
+
+Montana <- read_csv("file (11).csv")
+
+Montana <- Montana |>
+  select(Year, Value)
+
+Utah <- read_csv("file (12).csv")
+
+Utah <- Utah |>
+  select(Year, Value)
+
+Vermont <- read_csv("file (13).csv")
+
+Vermont <- Vermont |>
+  select(Year, Value)
+
+Virginia <- read_csv("file (14).csv")
+
+Virginia <- Virginia |>
+  select(Year, Value)
+
+Washington <- read_csv("file (15).csv")
+
+Washington <- Washington |>
+  select(Year, Value)
+
+WestVirginia <- read_csv("file (16).csv")
+
+WestVirginia <- WestVirginia |>
+  select(Year, Value)
+
+Michigan <- read_csv("file (17).csv")
+
+Michigan <- Michigan |>
+  select(Year, Value)
+
+Minnesota <- read_csv("file (18).csv")
+
+Minnesota <- Minnesota |>
+  select(Year, Value)
+
+Maine <- read_csv("file (19).csv")
+
+Maine <- Maine |>
+  select(Year, Value)
+
+Wisconsin <- read_csv("file (20).csv")
+
+Wisconsin <- Wisconsin |>
+  select(Year, Value)
+
+NewHampshire <- read_csv("file (21).csv")
+
+NewHampshire <- NewHampshire |>
+  select(Year, Value)
+
+NewJersey <- read_csv("file (22).csv")
+
+NewJersey <- NewJersey |>
+  select(Year, Value)
+
+NewMexico <- read_csv("file (23).csv")
+
+NewMexico <- NewMexico |>
+  select(Year, Value)
+
+NorthDakota <- read_csv("file (24).csv")
+
+NorthDakota <- NorthDakota |>
+  select(Year, Value)
+
+Ohio <- read_csv("file (25).csv")
+
+Ohio <- Ohio |>
+  select(Year, Value)
+
+Oklahoma <- read_csv("file (26).csv")
+
+Oklahoma <- Oklahoma |>
+  select(Year, Value)
+
+RhodeIsland <- read_csv("file (27).csv")
+
+RhodeIsland <- RhodeIsland |>
+  select(Year, Value)
+
+SouthCarolina <- read_csv("file (28).csv")
+
+SouthCarolina <- SouthCarolina |>
+  select(Year, Value)
+
+SouthDakota <- read_csv("file (29).csv")
+
+SouthDakota <- SouthDakota |>
+  select(Year, Value)
+
+Alabama <- read_csv("file (30).csv")
+
+Alabama <- Alabama |>
+  select(Year, Value)
+
+Alaska <- read_csv("file (31).csv")
+
+Alaska <- Alaska |>
+  select(Year, Value)
+
+Arizona <- read_csv("file (32).csv")
+
+Arizona <- Arizona |>
+  select(Year, Value)
+
+Arkansas <- read_csv("file (33).csv")
+
+Arkansas <- Arkansas |>
+  select(Year, Value)
+
+NewYork <- read_csv("file (34).csv")
+
+NewYork <- NewYork |>
+  select(Year, Value)
+
+NorthCarolina <- read_csv("file (35).csv")
+
+NorthCarolina <- NorthCarolina |>
+  select(Year, Value)
+
+Oregon <- read_csv("file (36).csv")
+
+Oregon <- Oregon |>
+  select(Year, Value)
+
+Pennsylvania <- read_csv("file (37).csv") 
+
+Pennsylvania <- Pennsylvania |>
+  select(Year, Value)
+
+California <- read_csv("file (38).csv")
+
+California <- California |>
+  select(Year, Value)
+
+Colorado <- read_csv("file (39).csv")
+
+Colorado <- Colorado |>
+  select(Year, Value)
+
+Tennessee <- read_csv("file (40).csv") 
+
+Tennessee <- Tennessee |>
+  select(Year, Value)
+
+Texas <- read_csv("file (41).csv")
+
+Texas <- Texas |>
+  select(Year, Value)
+
+Connecticut <- read_csv("file (42).csv")
+
+Connecticut <- Connecticut |>
+  select(Year, Value)
+
+Delaware <- read_csv("file (43).csv")
+
+Delaware <- Delaware |>
+  select(Year, Value)
+
+Florida <- read_csv("file (44).csv")
+
+Florida <- Florida |>
+  select(Year, Value)
+
+Georgia <- read_csv("file (45).csv")
+
+Georgia <- Georgia |>
+  select(Year, Value)
+
+Hawaii <- read_csv("file (46).csv")
+
+Hawaii <- Hawaii |>
+  select(Year, Value)
+
+Idaho <- read_csv("file (47).csv")
+
+Idaho <- Idaho |>
+  select(Year, Value)
+
+Illinois <- read_csv("file (48).csv")
+
+Illinois <- Illinois |>
+  select(Year, Value)
+
+Nebraska <- read_csv("file (49).csv")
+
+Nebraska <- Nebraska |>
+  select(Year, Value)
+
+Nevada <- read_csv("file (50).csv")
+
+Nevada <- Nevada |>
+  select(Year, Value)
+
+US_data <- bind_rows(list(Alabama = Alabama, Alaska = Alaska, Arizona = Arizona, 
+                          Arkansas = Arkansas, California = California, 
+                          Colorado = Colorado, Connecticut = Connecticut, 
+                          Delaware = Delaware, Florida = Florida, 
+                          Georgia = Georgia, Hawaii = Hawaii, Idaho = Idaho, 
+                          Illinois = Illinois, Indiana = Indiana, Iowa = Iowa, 
+                          Kansas = Kansas, Kentucky = Kentucky, Louisiana = Louisiana, 
+                          Maine = Maine, Maryland = Maryland, Massachusetts = Massachusetts, 
+                          Michigan = Michigan, Minnesota = Minnesota, Mississippi = Mississippi, 
+                          Missouri = Missouri, Montana = Montana, Nebraska = Nebraska, Nevada = Nevada, 
+                          "New Hampshire" = NewHampshire, "New Jersey" = NewJersey, "New Mexico" = NewMexico, 
+                          "New York" = NewYork, "North Carolina" = NorthCarolina, "North Dakota" = NorthDakota, 
+                          Ohio = Ohio, Oklahoma = Oklahoma, Oregon = Oregon, Pennsylvania = Pennsylvania, 
+                          "Rhode Island" = RhodeIsland, "South Carolina" = SouthCarolina, "South Dakota" = SouthDakota, 
+                          Tennessee = Tennessee, Texas = Texas, Utah = Utah, Vermont = Vermont, 
+                          Virginia = Virginia, Washington = Washington, "West Virginia" = WestVirginia, Wisconsin = Wisconsin, 
+                          Wyoming = Wyoming), 
+                     .id = "name")
+
+head(US_data, 5)
+
+
+## Data wrangling
+
+state_polygons <- ne_download(type = "states") |>
+  filter(admin == "United States of America")
+
+class(state_polygons)
+head(state_polygons, 5)
+
+joined_states <- left_join(state_polygons, US_data, by = "name") |>
+  select(name, 
+         year = Year, 
+         value = Value, 
+         geometry)
+head(joined_states, 5)
+
+## 2012 Data
+
+joined_states_2012 <- joined_states |>
+  filter(year == 2012)
+
+categories <- c(0, 60, 65, 70, 75, 80, 85, 90, 95, 100)
+
+colors_2012 <- colorBin("GnBu", domain = joined_states_2012$value, bins = categories)
+
+info_2012 <- sprintf(
+  "<strong>%s</strong><br/>%g",
+  joined_states_2012$name, joined_states_2012$value) |> 
+  lapply(htmltools::HTML)
+
+## 2025 Data
+
+joined_states_2025 <- joined_states |>
+  filter(year == 2025)
+head(joined_states_2025)
+
+
+categories <- c(0, 60, 65, 70, 75, 80, 85, 90, 95, 100)
+
+colors_2025 <- colorBin("GnBu", domain = joined_states_2025$value, bins = categories)
+
+info_2025 <- sprintf(
+  "<strong>%s</strong><br/>%g",
+  joined_states_2025$name, joined_states_2025$value) |> 
+  lapply(htmltools::HTML)
+
+## Entire US Data
+
+entire_US <- read.csv("entire_us_data.csv") |>
+  drop_na() |>
+  group_by(Year) |>
+  summarize(
+    value = mean(as.numeric(Value))
+  )
+
+```
+
+\[Need to do: Introduce what the gender pay gap is and why it matters. I will use other sources I have found (with citations) in this section.\]
+
+This article attempts to visualize the gender pay gap in the United States by using data from the U.S. Bureau of Labor Statistics' [Current Population Survey](https://www.bls.gov/cps/). This survey collects data on full-time U.S. workers' weekly earnings, including data on the median earnings of men and women. These visualizations use fifty-one data sets from this survey (collected from all fifty states) entitled "Women's earnings as percent of men's, Median weekly earnings of full-time and salary workers."[^1]
+
+[^1]: All data sets were downloaded from the U.S. Bureau of Labor Statistics' Data Finder. As of May 27, 2026, all fifty-one data sets (one per U.S. state and one of the entire country) were available on their website.
+
+## Overall U.S. Trends
+
+As we start digging into this data, one introductory question to ask is: ***how has the pay gap evolved over the past few decades?*** Unfortunately, the Census Bureau data is not available before 1979, but, nonetheless, data from the years 1979 to 2026 show some interesting trends.
+
+```{r}
+#| label: U.S. Data Linegraph
+#| echo: false
+#| fig-width: 9
+#| fig-height: 5
+#| warning: false
+
+ggplot(data = entire_US, 
+       mapping = aes(x = Year, y = value)) +
+  geom_line(color = "lightblue3", linewidth = 1) +
+  labs(
+    y = "Percent (%)",
+    x = "",
+    title = "U.S. data from 1979-2026") +
+  theme_minimal() +
+  theme(
+    axis.title.y = element_text(size = 14),
+    axis.title.x = element_text(size = 14),
+    plot.title = element_text(size = 18)) +
+  transition_reveal(Year, range = NULL, keep_last = TRUE)
+
+```
+
+As a result of some natural variation in the data, there are some small back-and-forth movement over the years. Overall, however, the percent climbed fairly rapidly from approximately 1980 to 2010, stabilizing over 2010 to 2026 at somewhere near 85%. Looking at this visualization, it doesn't appear that the percentage has changed much in the past few years.
+
+However, this doesn't tell us much about what the data looks like at a state level. For example, ***what is the range of percentages across the country? Do they differ geographically by state or region? Or are all parts of the country basically equal in this respect?***
+
+Digging deeper into this observation, the data was broken down into states for both 2012 and 2025.
+
+### 2012 Data (left) vs 2025 Data (right)
+
+```{r}
+#| label: percent-graphs
+#| echo: false
+#| layout-ncol: 2
+#| column: screen-inset-shaded
+
+
+leaflet(joined_states_2012) |>
+  addTiles("MapBox") |>
+  addPolygons(fillColor = ~colors_2012(value),
+                 weight = 1, 
+                 opacity = 1,
+                 color = "white",
+                 dashArray = "4",
+                 fillOpacity = 0.8,
+              highlightOption = highlightOptions(
+                weight = 3, 
+                color = "grey",
+                dashArray = "4", 
+                fillOpacity = 1, 
+                bringToFront = TRUE),
+              label = info_2012,
+              labelOptions = labelOptions(
+                style = list("font-weight" = 
+                               "normal", 
+                             padding = "3px 5px"),
+                textsize = "14px",
+                direction = "auto")) |>
+  addLegend(pal = colors_2012, values = ~value, opacity = 0.8, title = "Percent", position = "bottomright")
+
+leaflet(joined_states_2025) |>
+  addTiles("MapBox") |>
+  addPolygons(fillColor = ~colors_2025(value),
+              weight = 1, 
+              opacity = 1,
+              color = "white",
+              dashArray = "4",
+              fillOpacity = 0.8,
+              highlightOption = highlightOptions(
+                weight = 3, 
+                color = "grey",
+                dashArray = "4", 
+                fillOpacity = 1, 
+                bringToFront = TRUE),
+              label = info_2025,
+              labelOptions = labelOptions(
+                style = list("font-weight" = 
+                               "normal", 
+                             padding = "3px 5px"),
+                textsize = "14px",
+                direction = "auto")) |>
+  addLegend(pal = colors_2025, values = ~value, opacity = 0.8, title = "Percent", position = "bottomright")
+```
+
+\[Need to do: (1) explain/unpack the two visualizations above, (2) discuss any lingering concerns/comments about the data\]
+
