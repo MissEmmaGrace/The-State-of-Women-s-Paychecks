@@ -1071,7 +1071,6 @@
         "RemoteSha": "0.6.39"
       }
     },
-<<<<<<< HEAD
     "distributional": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -1105,8 +1104,6 @@
         "RemoteSha": "0.7.0"
       }
     },
-=======
->>>>>>> 852e8573f97bc96ee1282d7fc24b959dc44755f4
     "dplyr": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -1512,7 +1509,6 @@
         "RemoteSha": "1.0.11"
       }
     },
-<<<<<<< HEAD
     "ggdist": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -1552,8 +1548,6 @@
         "RemoteSha": "3.3.3"
       }
     },
-=======
->>>>>>> 852e8573f97bc96ee1282d7fc24b959dc44755f4
     "ggplot2": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -2631,7 +2625,6 @@
         "RemoteSha": "0.1.11"
       }
     },
-<<<<<<< HEAD
     "numDeriv": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -2660,8 +2653,6 @@
         "RemoteSha": "2016.8-1.1"
       }
     },
-=======
->>>>>>> 852e8573f97bc96ee1282d7fc24b959dc44755f4
     "openssl": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -3026,7 +3017,6 @@
         "RemoteSha": "1.2.1"
       }
     },
-<<<<<<< HEAD
     "quadprog": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -3054,8 +3044,6 @@
         "RemoteSha": "1.5-8"
       }
     },
-=======
->>>>>>> 852e8573f97bc96ee1282d7fc24b959dc44755f4
     "ragg": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -4738,12 +4726,9 @@
     }
   },
   "files": {
-<<<<<<< HEAD
     ".RData": {
       "checksum": "09b7ed1f5f84a80551d927ad9874a61a"
     },
-=======
->>>>>>> 852e8573f97bc96ee1282d7fc24b959dc44755f4
     "entire_us_data.csv": {
       "checksum": "02cbc377df6299554a216dc3a1d2d456"
     },
@@ -4898,11 +4883,10 @@
       "checksum": "f1ce48089ab404de14b5c8d3f19c6112"
     },
     "report.html": {
-<<<<<<< HEAD
-      "checksum": "df46e8aa240856f3064b6bed9953d475"
+      "checksum": "66fad10ec6700ba0142b2fef708bbad9"
     },
     "report.qmd": {
-      "checksum": "79c7a95dcbd9510fe907ab978ecf711d"
+      "checksum": "926db7bb8684a13c96eb4a5d62b5cf78"
     },
     "report_files/figure-html/histograms-1.png": {
       "checksum": "09233a675375406f880afe28f54b3af1"
@@ -4921,15 +4905,6 @@
     },
     "report_files/figure-html/unnamed-chunk-1-2.png": {
       "checksum": "3954a99cc84ffbda68423ca8d5e95da7"
-=======
-      "checksum": "89ec77e0c4df37788424fb19bd71d5d7"
-    },
-    "report.qmd": {
-      "checksum": "dfe5f91e16052bb8b761c36e250f86d6"
-    },
-    "report_files/figure-html/U.S. Data Linegraph-1.gif": {
-      "checksum": "c10622ff487f5d712cb7f8ccda8db3fd"
->>>>>>> 852e8573f97bc96ee1282d7fc24b959dc44755f4
     },
     "report_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css": {
       "checksum": "9e3ffae467580fdb927a41352e75a2e0"

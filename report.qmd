@@ -282,7 +282,7 @@ joined_states_2025 <- joined_states |>
   filter(year == 2025)
 
 ## Bin categories 
-categories <- c(0, 10, 20, 30, 40, 100)
+categories <- c(0, 10, 20, 30, 40)
 
 ## Category colors
 colors_2012 <- colorBin("GnBu", 
@@ -383,7 +383,7 @@ Digging deeper into this observation, the data was broken down into states for b
 #| layout-ncol: 2
 #| column: screen-inset-shaded
 
-# 2012 Map 
+# 2012 map 
 
 leaflet(joined_states_2012) |>
   addTiles("MapBox") |>
@@ -416,7 +416,7 @@ leaflet(joined_states_2012) |>
     position = "bottomright") |>
   setView(-100, 37, zoom = 3.3)
 
-# 2025 Map 
+# 2025 map 
 
 leaflet(joined_states_2025) |>
   addTiles("MapBox") |>
