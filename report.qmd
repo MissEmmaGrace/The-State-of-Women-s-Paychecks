@@ -322,7 +322,7 @@ entire_US <- read.csv("entire_us_data.csv") |>
 ```
 
 
-This article visualizes the gender pay gap in the United States using data from the U.S. Bureau of Labor Statistics' [Current Population Survey](https://www.bls.gov/cps/). Fifty-one data sets entitled "Women's earnings as percent of men's, Median weekly earnings of full-time and salary workers" were used.^[All data sets were downloaded from the U.S. Bureau of Labor Statistics' Data Finder. As of May 27, 2026, all fifty-one data sets (one per U.S. state and one of the entire country) were available on their [website](https://data.bls.gov/dataQuery/search).] These publicly available data sets contain the median earnings of full-time, non-self-employed U.S. workers' weekly earnings divided between men and women. The pay gap was calculated by subtracting 1 from women's earnings as a percent of men's. For example, if women's earnings as a percent of men's were 80% for a certain area, the pay gap would be 20% respectively.
+This article visualizes the gender pay gap in the United States using data from the U.S. Bureau of Labor Statistics' [Current Population Survey](https://www.bls.gov/cps/). Fifty-one data sets entitled "Women's earnings as percent of men's, Median weekly earnings of full-time and salary workers" were used.^[All data sets were downloaded from the U.S. Bureau of Labor Statistics' Data Finder. As of May 27, 2026, all fifty-one data sets (one per U.S. state and one of the entire country) were available on their [website](https://data.bls.gov/dataQuery/search).] These publicly available data sets contain the median earnings of full-time, non-self-employed U.S. workers' weekly earnings divided between men and women. The pay gap was calculated by subtracting 1 by women's earnings as a percent of men's. For example, if women's earnings as a percent of men's were 80% for a certain area, the pay gap would be 20% respectively. 
 
 
 ## Overall U.S. Trends
@@ -365,14 +365,14 @@ ggplot(data = entire_US,
     keep_last = TRUE)
 ```
 
-There appears to be an overall decreasing trend in the U.S. pay gap over the past few decadews. Ignoring some small natural variation and noise in the data, the pay gap decreased fairly rapidly from approximately 1980 to 2010, stabilizing over 2010 to 2026 at somewhere near 15%. From this visualization, it appears that the pay gap has mostly plateaued in recent years. 
+There appears to be an overall decreasing trend in the U.S. pay gap over the past few decades. Ignoring some small natural variation and noise in the data, the pay gap decreased fairly rapidly from approximately 1980 to 2010, stabilizing over 2010 to 2026 at somewhere near 15%. From this visualization, it appears that the pay gap has mostly plateaued in recent years. 
 
 
 ## Zooming into the States
 
 However, the graph above doesn't tell us much about what the data looks like at a state level. For example, ***what is the range of percentages across the country? Do they differ geographically by state or region? Or, are all regions/states of the country basically the same?***
 
-Digging deeper into this observation, the data was broken down into states for both 2012 and 2025 (the earliest and latest the data is available).
+Digging deeper into this observation, the data was broken down into states for both 2012 and 2025 (the earliest and latest the data is available on a state level).
 
 ### 2012 Data (left) vs 2025 Data (right)
 ##### *(Hover over each state to see details)*
@@ -488,5 +488,4 @@ ggplot(data = joined_states_50,
     label =  c("0%", "10%", "20%", "30%"))
 ```
 
-In general, there is a very slight decreasing trend in the pay gap between 2012 to 2025. An interesting observation is the tails and outliers for each of the years. In general, earlier years have tails on the higher pay gap side, whereas later years have tails on the lower pay gap side. 
-
+In general, there is a very slight decreasing trend in the pay gap between 2012 to 2025. An interesting observation is the tails and outliers for each of the years. In general, earlier years have tails on the higher pay gap side, whereas later years have tails on the lower pay gap side.
